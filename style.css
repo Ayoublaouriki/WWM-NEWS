@@ -17,7 +17,7 @@ html,body{width:100%;height:100%;overflow:hidden}
 .cards:hover .cards-track{animation-play-state:paused}
 .game-card{flex:0 0 170px;width:170px}
 .game-card img{width:170px;height:94px;object-fit:cover;transform:none}
-@keyframes marquee{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-33.333333%,0,0)}}
+@keyframes marquee{0%{transform:translate3d(0,10px,0)}100%{transform:translate3d(-33.333333%,10px,0)}}
 @media(max-width:900px){.hero-bg{background-size:100% 100%;background-position:center center}.catalog{display:block;padding:22px 20px 16px}.cards{flex:0 0 100%;width:100%;max-width:100%;margin-top:16px}.cards-track{animation-duration:27s}.catalog-intro{position:relative;z-index:2}}
 
 /* Let the gallery feel like it is entering from beyond the viewport. */
@@ -25,4 +25,13 @@ html,body{width:100%;height:100%;overflow:hidden}
 .hero-bg:after{background:linear-gradient(180deg,rgba(5,3,12,.06),rgba(5,4,11,.12) 55%,rgba(5,5,9,.2) 87%)}
 .catalog{background:transparent}
 .cards{background:transparent}
+
+/* Fixed black gallery rail with a clean right entry edge. */
+.catalog{background:#050509;padding-top:22px;padding-bottom:18px}
+.cards{margin-top:14px;padding:14px 0 18px;border-top:3px solid #000;border-bottom:3px solid #000}
+.cards::after{content:"";position:absolute;z-index:6;top:0;right:0;bottom:0;width:10px;background:#050509;pointer-events:none}
+.game-card{flex-basis:200px;width:200px}
+.game-card img{width:200px;height:110px}
+.cards-track{transform:translateY(10px)}
+@media(max-width:900px){.catalog{padding-top:18px;padding-bottom:14px}.cards{margin-top:12px}.game-card{flex-basis:180px;width:180px}.game-card img{width:180px;height:100px}}
 
