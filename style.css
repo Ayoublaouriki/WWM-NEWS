@@ -72,3 +72,11 @@ html,body{width:100%;height:100%;overflow:hidden}
 .game-card:hover,.game-card:focus-visible{z-index:8;transform:translateY(-8px) scale(1.18)!important;opacity:1;filter:brightness(1.12)}
 .game-card img{transition:box-shadow .24s ease}
 .game-card:hover img,.game-card:focus-visible img{box-shadow:0 12px 28px rgba(0,0,0,.72),0 0 0 2px rgba(218,188,142,.7)}
+
+/* Keep the hero CTA above the fixed ticker on the live page. */
+.hero-copy{transform:translateY(-118px)}
+@media(max-width:900px){.hero-copy{transform:translateY(-54px)}}
+
+/* Keep the hero CTA clear of the fixed bottom ticker. */
+.hero{padding-bottom:210px}
+@media(max-width:900px){.hero{padding-bottom:270px}}
