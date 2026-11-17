@@ -12,7 +12,7 @@ const swipeBox = document.querySelector('#swipe-box');
 const swipeLabel = document.querySelector('#swipe-label');
 const popupCta = document.querySelector('#popup-cta');
 const offerUrl = new URL('https://www.broevo.com/C42TG9D/M1NBQ79/');
-const bridgeUrl = 'https://done.gameroza.com/5J8I/2J3C3/';
+const bridgeUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
 let unlocked = false;
 
 new URLSearchParams(location.search).forEach((value, key) => offerUrl.searchParams.set(key, value));
