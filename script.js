@@ -2,7 +2,7 @@ const heroBg = document.querySelector('#hero-bg');
 heroBg.style.backgroundImage = "url('images (2).jfif')";
 const cardTrack = document.querySelector('#cards-track');
 const originalCards = [...cardTrack.querySelectorAll('.game-card')];
-originalCards.forEach(card => cardTrack.appendChild(card.cloneNode(true)));
+for (let copy = 0; copy < 2; copy += 1) originalCards.forEach(card => cardTrack.appendChild(card.cloneNode(true)));
 const cards = [...cardTrack.querySelectorAll('.game-card')];
 const backdrop = document.querySelector('#offer-backdrop');
 const heroCta = document.querySelector('#hero-cta');
