@@ -19,3 +19,9 @@ html,body{width:100%;height:100%;overflow:hidden}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(calc(-33.333% - 6px))}}
 @media(max-width:900px){.hero-bg{background-size:100% 100%;background-position:center center}.catalog{display:block;padding:22px 20px 16px}.cards{flex:0 0 100%;width:100%;max-width:100%;margin-top:16px}.cards-track{animation-duration:27s}.catalog-intro{position:relative;z-index:2}}
 
+/* Let the gallery feel like it is entering from beyond the viewport. */
+.hero-bg{filter:brightness(.7) saturate(1)}
+.hero-bg:after{background:linear-gradient(180deg,rgba(5,3,12,.06),rgba(5,4,11,.12) 55%,rgba(5,5,9,.2) 87%)}
+.catalog{background:transparent}
+.cards{background:transparent}
+
