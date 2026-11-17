@@ -12,10 +12,10 @@ html,body{width:100%;height:100%;overflow:hidden}
 .hero-bg{background-size:100% 100%;background-position:center center;background-color:#101017;filter:brightness(.58) saturate(.9)}
 .catalog{gap:clamp(24px,4vw,50px);align-items:end}
 .catalog-intro{flex:0 0 270px;position:relative;z-index:4;background:rgba(3,3,6,.96);padding-right:18px}
-.cards{flex:1;min-width:0;width:auto;overflow:hidden;padding:2px 0 15px;position:relative}
+.cards{flex:0 1 calc(100vw - 360px);width:calc(100vw - 360px);max-width:calc(100vw - 360px);min-width:0;overflow:hidden;padding:2px 0 15px;position:relative;contain:layout paint}
 .cards-track{display:flex;gap:18px;width:max-content;animation:marquee 34s linear infinite}
 .cards:hover .cards-track{animation-play-state:paused}
 .game-card{flex:0 0 210px}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(calc(-50% - 9px))}}
-@media(max-width:900px){.hero-bg{background-size:100% 100%;background-position:center center}.catalog{display:block;padding:22px 20px 16px}.cards{width:100%;margin-top:16px}.cards-track{animation-duration:27s}.catalog-intro{position:relative;z-index:2}}
+@media(max-width:900px){.hero-bg{background-size:100% 100%;background-position:center center}.catalog{display:block;padding:22px 20px 16px}.cards{flex:0 0 100%;width:100%;max-width:100%;margin-top:16px}.cards-track{animation-duration:27s}.catalog-intro{position:relative;z-index:2}}
 
