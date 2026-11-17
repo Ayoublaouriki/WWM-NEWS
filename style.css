@@ -67,3 +67,9 @@ html,body{width:100%;height:100%;overflow:hidden}
 @keyframes ticker-scroll{0%{transform:translate3d(0,8px,0)}100%{transform:translate3d(-33.333333%,8px,0)}}
 @media(max-width:900px){.catalog{height:228px}.catalog-intro{height:84px}.cards{top:88px;height:132px}.cards-track{height:132px}.game-card{flex-basis:180px;width:180px}.game-card img{width:180px;height:94px}.game-card span{font-size:13px}}
 
+/* Hover preview: the selected card grows gently and its click updates the hero background. */
+.game-card{position:relative;z-index:1;transition:transform .24s ease,opacity .24s ease,filter .24s ease}
+.game-card:hover,.game-card:focus-visible{z-index:8;transform:translateY(-6px) scale(1.08)!important;opacity:1;filter:brightness(1.12)}
+.game-card img{transition:box-shadow .24s ease}
+.game-card:hover img,.game-card:focus-visible img{box-shadow:0 12px 28px rgba(0,0,0,.72),0 0 0 2px rgba(218,188,142,.7)}
+
