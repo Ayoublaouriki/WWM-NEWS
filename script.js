@@ -11,15 +11,22 @@ const swipe = document.querySelector('#swipe');
 const swipeBox = document.querySelector('#swipe-box');
 const swipeLabel = document.querySelector('#swipe-label');
 const popupCta = document.querySelector('#popup-cta');
-const offerUrl = new URL('https://new.gameroza.com/');
+// Always send CTA clicks through TRACKZIN so the click is recorded and the
+// offer receives the click id as sub1. Never link the affiliate URL directly.
+const trackerClickUrl = 'https://trk.gameroza.com/lp/click.php';
 const bridgeUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
 let unlocked = false;
 
-const trackingParams = new URLSearchParams(location.search);
-trackingParams.forEach((value, key) => offerUrl.searchParams.set(key, value));
-const inheritedSub1 = trackingParams.get('sub1') || trackingParams.get('subid') || trackingParams.get('click_id') || sessionStorage.getItem('kuma_click_id');
-if (inheritedSub1) offerUrl.searchParams.set('sub1', inheritedSub1);
-const clickId = trackingParams.get('click_id');
+function getClickId() {
+  const fromUrl = new URLSearchParams(location.search).get('click_id');
+  if (fromUrl) return fromUrl;
+  try {
+    const fromSession = sessionStorage.getItem('kuma_click_id');
+    if (fromSession) return fromSession;
+  } catch (_) { /* storage can be unavailable in private browsing */ }
+  const cookie = document.cookie.split('; ').find(row => row.startsWith('kuma_click_id='));
+  return cookie ? decodeURIComponent(cookie.split('=').slice(1).join('=')) : '';
+}
 cards.forEach(card => card.addEventListener('click', () => {
   cards.forEach(item => item.classList.remove('is-active'));
   card.classList.add('is-active');
@@ -36,9 +43,15 @@ function openPopup() {
   swipe.focus();
 }
 function launchOffer() {
-  if (clickId) offerUrl.searchParams.set('click_id', clickId);
-  const offerTab = window.open(offerUrl.toString(), '_blank', 'noopener,noreferrer');
-  window.setTimeout(() => location.assign(bridgeUrl), offerTab ? 80 : 0);
+  const clickId = getClickId();
+  if (!clickId) {
+    window.alert('Tracking click_id is missing. Open this page from the campaign tracking link.');
+    return;
+  }
+  const clickUrl = new URL(trackerClickUrl);
+  clickUrl.searchParams.set('click_id', clickId);
+  window.open(clickUrl.toString(), '_blank', 'noopener,noreferrer');
+  window.setTimeout(() => location.assign(bridgeUrl), 80);
 }
 heroCta.addEventListener('click', openPopup);
 closeOffer.addEventListener('click', () => { backdrop.hidden = true; });
