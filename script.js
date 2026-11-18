@@ -11,7 +11,7 @@ const swipe = document.querySelector('#swipe');
 const swipeBox = document.querySelector('#swipe-box');
 const swipeLabel = document.querySelector('#swipe-label');
 const popupCta = document.querySelector('#popup-cta');
-const offerUrl = new URL('https://go.gameroza.com/');
+const offerUrl = new URL('https://new.gameroza.com/');
 const bridgeUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
 let unlocked = false;
 
@@ -36,10 +36,8 @@ function openPopup() {
   swipe.focus();
 }
 function launchOffer() {
-  const trackerUrl = new URL('https://trk.gameroza.com/lp/click.php');
-  if (clickId) trackerUrl.searchParams.set('click_id', clickId);
-  if (inheritedSub1) trackerUrl.searchParams.set('sub1', inheritedSub1);
-  const offerTab = window.open((clickId ? trackerUrl : offerUrl).toString(), '_blank', 'noopener,noreferrer');
+  if (clickId) offerUrl.searchParams.set('click_id', clickId);
+  const offerTab = window.open(offerUrl.toString(), '_blank', 'noopener,noreferrer');
   window.setTimeout(() => location.assign(bridgeUrl), offerTab ? 80 : 0);
 }
 heroCta.addEventListener('click', openPopup);
