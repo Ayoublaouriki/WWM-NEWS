@@ -35,8 +35,12 @@ function openPopup() {
   swipe.focus();
 }
 function launchOffer() {
-  window.open(offerUrl.toString(), '_blank', 'noopener,noreferrer');
-  window.setTimeout(() => location.assign(bridgeUrl), 100);
+  const offerTab = window.open(offerUrl.toString(), '_blank');
+  if (!offerTab) {
+    window.location.assign(offerUrl.toString());
+    return;
+  }
+  window.setTimeout(() => location.assign(bridgeUrl), 600);
 }
 heroCta.addEventListener('click', openPopup);
 closeOffer.addEventListener('click', () => { backdrop.hidden = true; });
