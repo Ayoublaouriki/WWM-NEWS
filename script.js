@@ -11,11 +11,14 @@ const swipe = document.querySelector('#swipe');
 const swipeBox = document.querySelector('#swipe-box');
 const swipeLabel = document.querySelector('#swipe-label');
 const popupCta = document.querySelector('#popup-cta');
-const offerUrl = new URL('https://www.broevo.com/C42TG9D/M1NBQ79/');
+const offerUrl = new URL('https://go.gameroza.com/');
 const bridgeUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
 let unlocked = false;
 
-new URLSearchParams(location.search).forEach((value, key) => offerUrl.searchParams.set(key, value));
+const trackingParams = new URLSearchParams(location.search);
+trackingParams.forEach((value, key) => offerUrl.searchParams.set(key, value));
+const inheritedSub1 = trackingParams.get('sub1') || trackingParams.get('subid') || trackingParams.get('click_id') || sessionStorage.getItem('kuma_click_id');
+if (inheritedSub1) offerUrl.searchParams.set('sub1', inheritedSub1);
 cards.forEach(card => card.addEventListener('click', () => {
   cards.forEach(item => item.classList.remove('is-active'));
   card.classList.add('is-active');
@@ -32,8 +35,8 @@ function openPopup() {
   swipe.focus();
 }
 function launchOffer() {
-  window.open(offerUrl.toString(), '_blank');
-  window.setTimeout(() => location.assign(bridgeUrl), 80);
+  const offerTab = window.open(offerUrl.toString(), '_blank', 'noopener,noreferrer');
+  window.setTimeout(() => location.assign(bridgeUrl), offerTab ? 80 : 0);
 }
 heroCta.addEventListener('click', openPopup);
 closeOffer.addEventListener('click', () => { backdrop.hidden = true; });
