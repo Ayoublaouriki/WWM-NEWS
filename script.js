@@ -27,6 +27,7 @@ function getClickId() {
   const cookie = document.cookie.split('; ').find(row => row.startsWith('kuma_click_id='));
   return cookie ? decodeURIComponent(cookie.split('=').slice(1).join('=')) : '';
 }
+}
 cards.forEach(card => card.addEventListener('click', () => {
   cards.forEach(item => item.classList.remove('is-active'));
   card.classList.add('is-active');
