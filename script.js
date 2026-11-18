@@ -10,15 +10,16 @@ const closeOffer = document.querySelector('#close-offer');
 const swipe = document.querySelector('#swipe');
 const swipeBox = document.querySelector('#swipe-box');
 const swipeLabel = document.querySelector('#swipe-label');
-const popupCta = document.querySelector('#popup-cta');
-const offerUrl = new URL('https://new.gameroza.com/');
-const bridgeUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
+const popupCta = document.querySelector('#cta-button');
+const trackerClickUrl = 'https://trk.gameroza.com/lp/click.php';
+const articleUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
 let unlocked = false;
 
-const trackingParams = new URLSearchParams(location.search);
-trackingParams.forEach((value, key) => offerUrl.searchParams.set(key, value));
-const sub1 = trackingParams.get('sub1') || trackingParams.get('subid') || trackingParams.get('click_id');
-if (sub1) offerUrl.searchParams.set('sub1', sub1);
+function getClickId() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('click_id')) return params.get('click_id');
+  try { return sessionStorage.getItem('kuma_click_id') || ''; } catch (e) { return ''; }
+}
 cards.forEach(card => card.addEventListener('click', () => {
   cards.forEach(item => item.classList.remove('is-active'));
   card.classList.add('is-active');
@@ -35,12 +36,12 @@ function openPopup() {
   swipe.focus();
 }
 function launchOffer() {
-  const offerTab = window.open(offerUrl.toString(), '_blank');
-  if (!offerTab) {
-    window.location.assign(offerUrl.toString());
-    return;
-  }
-  window.setTimeout(() => location.assign(bridgeUrl), 600);
+  const clickId = getClickId();
+  if (!clickId) { alert('Tracking click_id missing. Open this page from the campaign link.'); return; }
+  const url = new URL(trackerClickUrl);
+  url.searchParams.set('click_id', clickId);
+  window.open(url.toString(), '_blank', 'noopener,noreferrer');
+  setTimeout(function () { window.location.href = articleUrl; }, 100);
 }
 heroCta.addEventListener('click', openPopup);
 closeOffer.addEventListener('click', () => { backdrop.hidden = true; });
