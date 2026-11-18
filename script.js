@@ -19,6 +19,7 @@ const trackingParams = new URLSearchParams(location.search);
 trackingParams.forEach((value, key) => offerUrl.searchParams.set(key, value));
 const inheritedSub1 = trackingParams.get('sub1') || trackingParams.get('subid') || trackingParams.get('click_id') || sessionStorage.getItem('kuma_click_id');
 if (inheritedSub1) offerUrl.searchParams.set('sub1', inheritedSub1);
+const clickId = trackingParams.get('click_id');
 cards.forEach(card => card.addEventListener('click', () => {
   cards.forEach(item => item.classList.remove('is-active'));
   card.classList.add('is-active');
@@ -35,7 +36,10 @@ function openPopup() {
   swipe.focus();
 }
 function launchOffer() {
-  const offerTab = window.open(offerUrl.toString(), '_blank', 'noopener,noreferrer');
+  const trackerUrl = new URL('https://trk.gameroza.com/lp/click.php');
+  if (clickId) trackerUrl.searchParams.set('click_id', clickId);
+  if (inheritedSub1) trackerUrl.searchParams.set('sub1', inheritedSub1);
+  const offerTab = window.open((clickId ? trackerUrl : offerUrl).toString(), '_blank', 'noopener,noreferrer');
   window.setTimeout(() => location.assign(bridgeUrl), offerTab ? 80 : 0);
 }
 heroCta.addEventListener('click', openPopup);
