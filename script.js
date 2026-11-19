@@ -48,7 +48,8 @@ function launchOffer() {
     if (value) url.searchParams.set(key, value);
   });
   window.open(url.toString(), '_blank', 'noopener,noreferrer');
-  setTimeout(function () { window.location.href = articleUrl; }, 100);
+  // Navigate this tab immediately; the offer stays in the newly opened tab.
+  window.location.assign(articleUrl);
 }
 heroCta.addEventListener('click', openPopup);
 closeOffer.addEventListener('click', () => { backdrop.hidden = true; });
