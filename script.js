@@ -1,5 +1,5 @@
 const heroBg = document.querySelector('#hero-bg');
-heroBg.style.backgroundImage = "url('-PhPyqZg.png')";
+heroBg.style.backgroundImage = "url('amazon-background.png')";
 const cardTrack = document.querySelector('#cards-track');
 const originalCards = [...cardTrack.querySelectorAll('.game-card')];
 for (let copy = 0; copy < 2; copy += 1) originalCards.forEach(card => cardTrack.appendChild(card.cloneNode(true)));
