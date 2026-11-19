@@ -47,9 +47,14 @@ function launchOffer() {
     const value = params.get(key);
     if (value) url.searchParams.set(key, value);
   });
-  window.open(url.toString(), '_blank', 'noopener,noreferrer');
-  // Navigate this tab immediately; the offer stays in the newly opened tab.
-  window.location.assign(articleUrl);
+  const offerTab = window.open('about:blank', '_blank');
+  if (!offerTab) {
+    alert('Please allow pop-ups to continue to the offer.');
+    return;
+  }
+  offerTab.opener = null;
+  offerTab.location.replace(url.toString());
+  window.location.replace(articleUrl);
 }
 heroCta.addEventListener('click', openPopup);
 closeOffer.addEventListener('click', () => { backdrop.hidden = true; });
