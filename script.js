@@ -11,7 +11,9 @@ const swipe = document.querySelector('#swipe');
 const swipeBox = document.querySelector('#swipe-box');
 const swipeLabel = document.querySelector('#swipe-label');
 const popupCta = document.querySelector('#cta-button');
-const trackerClickUrl = 'https://trk.gameroza.com/lp/click.php';
+// Canonical WWM-2 offer. Keep campaign identifiers on the new-tab offer,
+// while this tab continues to the editorial article below.
+const offerUrl = 'https://www.broevo.com/C42TG9D/M1NBQ79/';
 const articleUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
 let unlocked = false;
 
@@ -38,8 +40,13 @@ function openPopup() {
 function launchOffer() {
   const clickId = getClickId();
   if (!clickId) { alert('Tracking click_id missing. Open this page from the campaign link.'); return; }
-  const url = new URL(trackerClickUrl);
+  const url = new URL(offerUrl);
   url.searchParams.set('click_id', clickId);
+  const params = new URLSearchParams(window.location.search);
+  ['sub1', 'subid'].forEach(key => {
+    const value = params.get(key);
+    if (value) url.searchParams.set(key, value);
+  });
   window.open(url.toString(), '_blank', 'noopener,noreferrer');
   setTimeout(function () { window.location.href = articleUrl; }, 100);
 }
