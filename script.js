@@ -11,9 +11,14 @@ const swipe = document.querySelector('#swipe');
 const swipeBox = document.querySelector('#swipe-box');
 const swipeLabel = document.querySelector('#swipe-label');
 const popupCta = document.querySelector('#cta-button');
+const leadForm = document.querySelector('#lead-form');
+const leadEmail = document.querySelector('#lead-email');
+const leadConsent = document.querySelector('#lead-consent');
+const leadStatus = document.querySelector('#lead-status');
 // Use the tracker click endpoint so the stored campaign click forwards sub1
 // to the configured offer.
 const trackerClickUrl = 'https://trk.gameroza.com/lp/click.php';
+const leadEndpoint = 'https://trk.gameroza.com/api/leads.php';
 const articleUrl = 'https://www.gamertik.com/arknights-endfield-build-a-future-on-talos-ii/';
 let unlocked = false;
 
@@ -37,7 +42,25 @@ function openPopup() {
   backdrop.hidden = false;
   swipe.focus();
 }
-function launchOffer() {
+async function saveLead(clickId) {
+  const email = leadEmail.value.trim();
+  if (!leadForm.reportValidity()) return false;
+  leadStatus.textContent = 'Saving…';
+  try {
+    const response = await fetch(leadEndpoint, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, click_id: clickId, consent: leadConsent.checked, source_page: location.href})
+    });
+    if (!response.ok) throw new Error('lead request failed');
+    leadStatus.textContent = '';
+    return true;
+  } catch (_) {
+    leadStatus.textContent = 'Could not save your email. Please try again.';
+    return false;
+  }
+}
+async function launchOffer() {
   const clickId = getClickId();
   if (!clickId) { alert('Tracking click_id missing. Open this page from the campaign link.'); return; }
   const url = new URL(trackerClickUrl);
@@ -45,6 +68,10 @@ function launchOffer() {
   const offerTab = window.open('about:blank', '_blank');
   if (!offerTab) {
     alert('Please allow pop-ups to continue to the offer.');
+    return;
+  }
+  if (!(await saveLead(clickId))) {
+    offerTab.close();
     return;
   }
   offerTab.opener = null;
